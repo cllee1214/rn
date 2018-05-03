@@ -5,6 +5,9 @@ import ListContent from './list.js'
 import Header from './header.js'
 
 export default class HomeScreen extends React.Component {
+  static navigationOptions = {
+    title: '首页',
+  };
   render() {
     return (
     <View style={styles.container}>
@@ -14,7 +17,7 @@ export default class HomeScreen extends React.Component {
       </View>
       <View style={{backgroundColor: "#e1e1e1",width:"100%",flex:8,opacity:0.5}}>
         <View>
-           <ListContent></ListContent>
+           <ListContent navigation={this.props.navigation}></ListContent>
         </View>
       </View>
       <View style={{backgroundColor: "#fff",flex:-1,height:50,width: "100%"}}>

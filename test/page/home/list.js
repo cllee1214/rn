@@ -8,6 +8,7 @@ export default  class ListContent extends React.PureComponent {
     this.state = {
       data: []
     }
+    this._renderItem = this._renderItem.bind(this)
     this.getListData()
   }
   getListData() {
@@ -21,7 +22,7 @@ export default  class ListContent extends React.PureComponent {
   }
 
   _renderItem (data) {
-    return <ListContentItem key={data.index} index={data.index} avatar={data.item.author.avatar_url} replyCount={data.item.reply_count} visitCount={data.item.visit_count} title={data.item.title} />
+    return <ListContentItem navigation={this.props.navigation} key={data.index} index={data.index} avatar={data.item.author.avatar_url} replyCount={data.item.reply_count} visitCount={data.item.visit_count} id={data.item.id} title={data.item.title} />
   }
 
   render() {
@@ -39,6 +40,9 @@ export default  class ListContent extends React.PureComponent {
 }
 
 class ListContentItem extends React.PureComponent {
+  constructor(props) {
+    super(props)
+  }
   render(){
     return (
       <View style={{paddingLeft:10,paddingRight:10,paddingBottom:10,marginBottom:10,backgroundColor:"#fff"}}>
@@ -46,10 +50,13 @@ class ListContentItem extends React.PureComponent {
           <Image style={{width:20,height:20}} source={{uri: this.props.avatar}}></Image>
           <Text style={{marginTop:3}}> 20分钟前</Text>
         </View>
-        <Text key={this.props.index} style={{color: "#000",fontSize: 16,lineHeight:20,fontWeight: "800",marginTop:10,textAlign: "left"}}>{this.props.title}</Text>
+        <Text onPress={this.gotoDetail.bind(this, {title:this.props.title, id: this.props.id})}  key={this.props.index} style={{color: "#000",fontSize: 16,lineHeight:20,fontWeight: "800",marginTop:10,textAlign: "left"}}>{this.props.title}</Text>
         <Text style={{marginTop:10}}>{this.props.visitCount}人看过，{this.props.replyCount}个评论</Text>
       </View>
     )
-   
+  }
+  gotoDetail(info) {
+    console.log(info)
+    this.props.navigation.navigate('Detail', info)
   }
 }
